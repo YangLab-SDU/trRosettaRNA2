@@ -1,5 +1,7 @@
 # trRosettaRNA2
 
+![overview.png](https://github.com/quailwwk/trRosettaRNA2/blob/main/example/figures/overview.png?raw=true)
+
 This package is a part of trRosettaRNA2, a deep learning-based RNA structure prediction protocol. 
 The trRosettaRNA2 pipeline comprises two major steps: 
 
