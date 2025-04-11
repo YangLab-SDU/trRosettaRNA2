@@ -1,0 +1,20 @@
+name: trRNA2
+channels:
+  - https://conda.rosettacommons.org
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - numpy=2.1.2
+  - python=3.10
+  - pytorch=2.5.1+cu124
+  - torchaudio=2.5.1+cu124
+  - torchvision=0.12.1+cu124
+  - torch-geometric=2.6.1
+  - tqdm
+  - pip
+  - pip:
+      - einops==0.8.1
+      - pandas==2.2.3
+      - ml-collections==1.0.0
