@@ -22,7 +22,7 @@ Once the `conda` is installed, a new environment can be created and activated:
 conda env create -f environment.yml
 ```
 
-### 2. Download the network weights.
+### 2. Download the network weights
 
 ```bash
 wget http://yanglab.qd.sdu.edu.cn/trRosettaRNA/download/params_trRNA2.tar.bz2
