@@ -1,4 +1,4 @@
-
+# trRosettaRNA2
 
 This package is a part of trRosettaRNA2, a deep learning-based RNA structure prediction protocol. 
 The trRosettaRNA2 pipeline comprises two major steps: 
@@ -11,8 +11,8 @@ For more information about the trRosettaRNA2 pipeline, please refer to the first
 
 
 Installation
-====
-## 1. Environment installation
+----
+### 1. Environment installation
 
 It is recommended to use `conda` to manage the Python dependencies, which can be installed following https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html#regular-installation.
 Once the `conda` is installed, a new environment can be created and activated: 
@@ -22,7 +22,7 @@ Once the `conda` is installed, a new environment can be created and activated:
 conda env create -f environment.yml
 ```
 
-## 2. Download the network weights.
+### 2. Download the network weights.
 
 ```bash
 wget http://yanglab.qd.sdu.edu.cn/trRosettaRNA/download/params_trRNA2.tar.bz2
@@ -30,15 +30,15 @@ tar -jxvf params_trRNA2.tar.bz2
 ```
 
 Usage
-====
+----
 
-## Step 1. prepare inputs
+### Step 1. prepare inputs
 
 The primary input for trRosettaRNA2 is a Multiple Sequence Alignment (MSA) of the target RNA. This MSA can be generated using homology search tools such as [Infernal](http://eddylab.org/infernal/) and [BLASTN](https://blast.ncbi.nlm.nih.gov/). Recommended sequence databases for this search include [NT](https://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/) and [RNAcentral](https://rnacentral.org/). Before prediction, the MSA file **must be converted** into A3M format (see details at https://yanglab.qd.sdu.edu.cn/trRosettaRNA/msa_format.html) 
 
 Optionally, a single sequence can be used instead of the MSA. This approach is faster but may decrease prediction accuracy.
 
-## Step 2. run prediction
+### Step 2. run prediction
 
 **An basic example for prediction:**
 
