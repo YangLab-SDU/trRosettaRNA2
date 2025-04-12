@@ -3,9 +3,9 @@
 ![overview.png](https://github.com/quailwwk/trRosettaRNA2/blob/main/example/figures/overview.png?raw=true)
 
 This package is a part of trRosettaRNA2, a deep learning-based RNA structure prediction protocol. 
-The trRosettaRNA2 pipeline comprises two major steps: 
+Starting from an MSA, the trRosettaRNA2 pipeline comprises the following steps: 
 
- - Secondary structure (SS) prediction using  a transformer network
+ - Secondary structure (SS) prediction using a transformer network
  - 3D structure prediction using an end-to-end neural network.
  - (optional) 3D structure folding by energy minimization.
 
