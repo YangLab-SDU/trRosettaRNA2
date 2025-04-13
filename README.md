@@ -12,12 +12,16 @@ Starting from an MSA, the trRosettaRNA2 pipeline comprises the following steps:
 
 For more information about the trRosettaRNA2 pipeline, please refer to the first subsection of the METHODS section in the manuscript.
 
+We also establish a user-friendly [webserver](http://yanglab.qd.sdu.edu.cn/trRosettaRNA/) for trRosettaRNA2.
+
+
 
 Installation
 ----
 ### 1. Environment installation
 
-It is recommended to use `conda` to manage the Python dependencies, which can be installed following https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html#regular-installation.
+It is recommended to use `conda` to manage the Python dependencies, which can be installed following https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html#regular-installation. 
+
 Once the `conda` is installed, a new environment can be created and activated: 
 
 ```bash

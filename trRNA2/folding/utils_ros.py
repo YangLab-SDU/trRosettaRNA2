@@ -407,7 +407,7 @@ def fold_all(args, out_pdb):
 
     min_energy = np.inf
     for pose in poses:
-        # pose = pose.result()
+        pose = pose.result()
         energy = op_score(pose)
         if energy < min_energy:
             best_pose = pose
