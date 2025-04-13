@@ -1,4 +1,4 @@
-# trRosettaRNA2
+# trRosettaRNA2: Predicting RNA 3D structure and conformers using a pre-trained secondary structure model and structure-aware attention
 
 ![overview.png](https://github.com/quailwwk/trRosettaRNA2/blob/main/example/figures/overview.png?raw=true)
 
