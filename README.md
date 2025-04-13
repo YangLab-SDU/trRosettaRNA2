@@ -64,7 +64,7 @@ You can optionally run predictions using alternative configurations. Examples in
 - **run the PyRosetta version**
 
   ```bash
-  python -m trRNA2.predict -i example/seq.a3m -o example/output -gpu 0 -pyrosetta -fas example/seq.fasta
+  python -m trRNA2.predict -i example/seq.a3m -o example/output -pyrosetta -fas example/seq.fasta
   ```
 
   In this mode, predicted geometric restraints are converted into energy terms. These terms, combined with the Rosetta energy function, guide the 3D structure refinement process via energy minimization.
