@@ -1,5 +1,7 @@
 # trRosettaRNA2: Predicting RNA 3D structure and conformers using a pre-trained secondary structure model and structure-aware attention
 
+[![Python version](https://img.shields.io/badge/python-3.10%2B-blue?style=flat-square)](https://www.python.org/downloads/) [![PyTorch version](https://img.shields.io/badge/PyTorch-2.0%2B-red?style=flat-square)](https://pytorch.org/)[![PyTorch_Geometric: 2020+](https://img.shields.io/badge/PyTorch_Geometric-2.0%2B-yellow?style=flat-square)](https://pytorch-geometric.readthedocs.io/en/latest/install/installation.html)[![PyRosetta: 2020+](https://img.shields.io/badge/PyRosetta-2020%2B-green?style=flat-square)](https://www.pyrosetta.org/downloads)
+
 ![overview.png](https://github.com/quailwwk/trRosettaRNA2/blob/main/example/figures/overview.png?raw=true)
 
 This package is a part of trRosettaRNA2, a deep learning-based RNA structure prediction protocol. 
