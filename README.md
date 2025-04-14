@@ -34,7 +34,7 @@ It is recommended to use `mamba` to manage the Python dependencies, which can be
 Once the `mamba` is installed, a new environment can be created and activated: 
 
 ```bash
-### tested on our device with CUDA 12.4 ###
+### tested on our devises with CUDA 12.4 and 11.2 ###
 mamba env create -f environment.yml
 ```
 
