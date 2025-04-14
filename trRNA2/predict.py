@@ -152,8 +152,8 @@ if __name__ == '__main__':
 
     raw_seq = open(args.msa).readlines()[1].strip().replace('T', 'U').replace('-', '')
 
-    print('----------------Predict----------------')
     if args.ss_file is None:
+        print('----------------Predict----------------')
         ss_models = []
         for nm in range(1, 4):
             ss_mname = f'model_{nm}_finetune'
@@ -188,8 +188,7 @@ if __name__ == '__main__':
             ss = torch.from_numpy(ss).float()
         else:
             ss = None
-
-    print('----------------Predict----------------')
+        print('----------------Predict----------------')
 
     outputs_tosave_all, outputs_all = predict(model, raw_seq, msa, ss)
 
@@ -211,7 +210,7 @@ if __name__ == '__main__':
                                                          confidence=outputs['plddt'][0].data.cpu().numpy(),
                                                          )
         npz_dict = outputs_tosave['inter_labels']
-        npz_dict['plddt'] = outputs['plddt'][0].data.cpu().numpy()
+        npz_dict['plddt'] = outputs['plddt'][-1].data.cpu().numpy()
         np.savez_compressed(npz.replace('.npz', f'_c{c}.npz') if c < config['max_recycle'] else npz, **npz_dict, )
 
     if args.refine_steps is not None and args.refine_steps > 0:
@@ -235,3 +234,5 @@ if __name__ == '__main__':
         fold_all(args, out_pdb=f'{out_dir}/model_1_pyrosetta.pdb')
 
     print('done!')
+    plddt_global = npz_dict['plddt'].mean()
+    print(f'pLDDT: {plddt_global:.3f}')

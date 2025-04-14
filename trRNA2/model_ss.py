@@ -135,25 +135,24 @@ class SSpredictor(nn.Module):
         reprs_prev = None
         for c in range(1 + num_recycle):
             with torch.set_grad_enabled(training and c == num_recycle):
-                with torch.cuda.amp.autocast(enabled=True):
-                    reprs = self.input_embedder(msa if msa.ndim == 3 else msa[None], msa_cutoff=msa_cutoff)
+                # with torch.amp.autocast(enabled=True,device_type='cuda'):
+                reprs = self.input_embedder(msa if msa.ndim == 3 else msa[None], msa_cutoff=msa_cutoff)
 
-                    if reprs_prev is None:
-                        reprs_prev = {
-                            'pair': torch.zeros_like(reprs['pair']),
-                            'single': torch.zeros_like(reprs['msa'][:, 0]),
-                            'x': torch.zeros(list(reprs['pair'].shape[:2]) + [3], device=reprs['pair'].device),
-                        }
-                        t = reprs_prev['x']
-                    rec_msa, rec_pair = self.recycle_embedder(reprs_prev)
-                    reprs['msa'][:, 0] = reprs['msa'][:, 0] + rec_msa
-                    reprs['pair'] = reprs['pair'] + rec_pair
-                    out = self.net2d(reprs['pair'], msa_emb=reprs['msa'], return_msa=True, res_id=res_id,
-                                     preprocess=False, return_attn=c == num_recycle)
-                    if c != num_recycle:
-                        pair_repr, msa_repr = out
-                    else:
-                        pair_repr, msa_repr, attn_maps = out
+                if reprs_prev is None:
+                    reprs_prev = {
+                        'pair': torch.zeros_like(reprs['pair']),
+                        'single': torch.zeros_like(reprs['msa'][:, 0]),
+                        'x': torch.zeros(list(reprs['pair'].shape[:2]) + [3], device=reprs['pair'].device),
+                    }
+                rec_msa, rec_pair = self.recycle_embedder(reprs_prev)
+                reprs['msa'][:, 0] = reprs['msa'][:, 0] + rec_msa
+                reprs['pair'] = reprs['pair'] + rec_pair
+                out = self.net2d(reprs['pair'], msa_emb=reprs['msa'], return_msa=True, res_id=res_id,
+                                 preprocess=False, return_attn=c == num_recycle)
+                if c != num_recycle:
+                    pair_repr, msa_repr = out
+                else:
+                    pair_repr, msa_repr, attn_maps = out
                 reprs_prev = {
                     'single': msa_repr[..., 0, :, :].detach(),
                     'pair': pair_repr.detach(),

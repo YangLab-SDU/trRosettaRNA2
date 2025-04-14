@@ -212,25 +212,25 @@ class Folding(nn.Module):
         outputs_all = {}
         for c in range(1 + num_recycle):
             with torch.set_grad_enabled(False):
-                with torch.cuda.amp.autocast(enabled=len(raw_seq) > 300):
-                    reprs = self.input_embedder(msa, ss, msa_cutoff=msa_cutoff)
-                    if reprs_prev is None:
-                        reprs_prev = {
-                            'pair': torch.zeros_like(reprs['pair']),
-                            'single': torch.zeros_like(reprs['msa'][:, 0]),
-                            'x': torch.zeros(list(reprs['pair'].shape[:2]) + [3], device=reprs['pair'].device),
-                        }
-                    t = reprs_prev['x']
-                    rec_msa, rec_pair = self.recycle_embedder(reprs_prev, t)
-                    reprs['msa'][:, 0] = reprs['msa'][:, 0] + rec_msa
-                    reprs['pair'] = reprs['pair'] + rec_pair
-                    out = self.net2d(reprs['pair'], msa_emb=reprs['msa'], return_msa=True, res_id=res_id,
-                                     preprocess=False, return_attn=c == num_recycle)
-                    torch.cuda.empty_cache()
-                    if c != num_recycle:
-                        pair_repr, msa_repr = out
-                    else:
-                        pair_repr, msa_repr, attn_maps = out
+                # with torch.amp.autocast(enabled=len(raw_seq) > 300,device_type='cuda'):
+                reprs = self.input_embedder(msa, ss, msa_cutoff=msa_cutoff)
+                if reprs_prev is None:
+                    reprs_prev = {
+                        'pair': torch.zeros_like(reprs['pair']),
+                        'single': torch.zeros_like(reprs['msa'][:, 0]),
+                        'x': torch.zeros(list(reprs['pair'].shape[:2]) + [3], device=reprs['pair'].device),
+                    }
+                t = reprs_prev['x']
+                rec_msa, rec_pair = self.recycle_embedder(reprs_prev, t)
+                reprs['msa'][:, 0] = reprs['msa'][:, 0] + rec_msa
+                reprs['pair'] = reprs['pair'] + rec_pair
+                out = self.net2d(reprs['pair'], msa_emb=reprs['msa'], return_msa=True, res_id=res_id,
+                                 preprocess=False, return_attn=c == num_recycle)
+                torch.cuda.empty_cache()
+                if c != num_recycle:
+                    pair_repr, msa_repr = out
+                else:
+                    pair_repr, msa_repr, attn_maps = out
                 reprs = {'msa': msa_repr, 'pair': pair_repr}
 
                 if ('ss3D' in config and config['ss3D']):

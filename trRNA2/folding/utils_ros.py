@@ -241,7 +241,7 @@ def run_refine(pose):
         print('!!! idealization failed !!!')
 
 
-def fold_single(args):
+def fold_single(args, i):
     mmap = MoveMap()
     mmap.set_bb(True)  ##Whether the frame dihedral angle changes
     mmap.set_chi(True)  ##Whether the dihedral angle of the side chain changes
@@ -288,15 +288,10 @@ def fold_single(args):
     print("refine pose")
     run_refine(pose)
 
-    # name = "ref_model_" + str(args.dcut) + "_" + str(args.i) + ".pdb"
-    # pose.dump_pdb(f'{args.tmp}/{name}')
-    # inf = name + "\t" + "opscore:" + str(op_score(pose))
-    # SS = open(args.scoreout, "a")
-    # SS.write(inf)
-    # SS.write("\n")
-    # SS.close()
-
-    return pose
+    energy = op_score(pose)
+    with open(f'{args.tmpdir}/score_{i}', 'w') as f:
+        f.write(str(energy))
+    pose.dump_pdb(f'{args.tmpdir}/pose_{i}.pdb')
 
 
 def fold_all(args, out_pdb):
@@ -401,17 +396,22 @@ def fold_all(args, out_pdb):
     F.close()
 
     executor = concurrent.futures.ProcessPoolExecutor(args.cpu)
-    futures = [executor.submit(fold_single, args) for _ in range(args.nmodels)]
+    futures = [executor.submit(fold_single, args, i) for i in range(args.nmodels)]
     results = concurrent.futures.wait(futures)
-    poses = list(results[0])
 
     min_energy = np.inf
-    for pose in poses:
-        pose = pose.result()
-        energy = op_score(pose)
+    score_dict = {}
+    for i in range(args.nmodels):
+        energy = float(open(f'{args.tmpdir}/score_{i}').read())
+        score_dict[i] = energy
         if energy < min_energy:
-            best_pose = pose
+            best_pose = f'{args.tmpdir}/pose_{i}.pdb'
             min_energy = energy
 
-    best_pose.dump_pdb(out_pdb)
-    print('\ndone')
+    results_dir = os.path.dirname(out_pdb) + '/' + 'pyrosetta_top5'
+    os.makedirs(results_dir, exist_ok=True)
+    top5 = sorted(score_dict, key=lambda d: score_dict[d])[:5]
+    for i, pose in enumerate(top5):
+        os.system(f'cp {args.tmpdir}/pose_{i}.pdb {results_dir}/model_{i + 1}.pdb')
+    os.system(f'cp {best_pose} {out_pdb}')
+    # print('\ndone')

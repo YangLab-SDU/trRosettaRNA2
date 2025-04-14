@@ -55,7 +55,7 @@ Optionally, a single sequence can be used instead of the MSA. This approach is f
 python -m trRNA2.predict -i example/seq.a3m -o example/output
 ```
 
-This command executes the default trRosettaRNA2 prediction procedure. This process utilizes its internal secondary structure (SS) module, `trRNA2-SS`, to predict SS and performs **end-to-end** structure prediction.
+This command executes the default trRosettaRNA2 prediction procedure. This process utilizes its internal secondary structure (SS) module, `trRNA2-SS`, to predict SS and performs **end-to-end** structure prediction. The predicted 3D structure will be saved as a PDB file `model_1_ref200.pdb` under the `-o` directory.
 
 **Alternative prediction configurations:**
 
@@ -67,7 +67,7 @@ You can optionally run predictions using alternative configurations. Examples in
   python -m trRNA2.predict -i example/seq.a3m -o example/output -pyrosetta -fas example/seq.fasta
   ```
 
-  In this mode, predicted geometric restraints are converted into energy terms. These terms, combined with the Rosetta energy function, guide the 3D structure refinement process via energy minimization.
+  In this mode, predicted geometric restraints are converted into energy terms. These terms, combined with the Rosetta energy function, guide the 3D structure refinement process via energy minimization. The predicted 3D structure will be saved as a PDB file `model_1_pyrosetta.pdb` under the `-o` directory.
 
 - **Using your custom SS:**
 
