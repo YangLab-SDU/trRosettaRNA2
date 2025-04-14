@@ -1,21 +1,22 @@
 name: trRNA2
 channels:
   - https://conda.rosettacommons.org
-  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
   - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
   - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
   - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
   - pytorch
   - nvidia
   - conda-forge
-  - defaults
 dependencies:
   - numpy=2.1.2
   - python=3.10
   - pyrosetta=2024.39+release.59628fb
-  - pytorch=2.5.1=py3.10_cuda11.8_cudnn9.1.0_0
-  - torchaudio=2.5.1=py310_cu118
-  - torchvision=0.20.1=py310_cu118
+  - sympy=1.13.1
+  - cudatoolkit=11.8
+  - pytorch::pytorch=2.5.1=py3.10_cuda11.8_cudnn9.1.0_0
+  - pytorch::torchaudio=2.5.1=py310_cu118
+  - pytorch::torchvision=0.20.1=py310_cu118
   - tqdm
   - pip
   - pip:
@@ -25,8 +26,4 @@ dependencies:
       - einops==0.8.1
       - ml-collections==1.0.0
       - scipy==1.15.2
-      - torch-cluster==1.6.3+pt25cu118
       - torch-geometric==2.6.1
-      - torch-scatter==2.1.2+pt25cu118
-      - torch-sparse==0.6.18+pt25cu118
-      - torch-spline-conv==1.2.2+pt25cu118

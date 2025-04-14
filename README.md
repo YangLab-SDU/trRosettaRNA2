@@ -22,13 +22,13 @@ Installation
 ----
 ### 1. Environment installation
 
-It is recommended to use `conda` to manage the Python dependencies, which can be installed following https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html#regular-installation. 
+It is recommended to use `mamba` to manage the Python dependencies, which can be installed following [Mamba Installation — documentation](https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html). 
 
-Once the `conda` is installed, a new environment can be created and activated: 
+Once the `mamba` is installed, a new environment can be created and activated: 
 
 ```bash
 ### tested on our device with CUDA 12.4 ###
-conda env create -f environment.yml
+mamba env create -f environment.yml
 ```
 
 ### 2. Download the network weights
