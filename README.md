@@ -82,3 +82,20 @@ For a complete description of all `trRNA2.predict` options and arguments, please
 ```bash
 python -m trRNA2.predict -h
 ```
+
+
+
+## Citation 
+
+If you use trRosettaRNA2 in your research or work, please cite our publication: 
+
+```
+@article {Wang2024trRosettaRNA2,
+	title = {Predicting RNA 3D structure and conformers using a pre-trained secondary structure model and structure-aware attention},
+	author = {Wenkai Wang, Zhenling Peng, and Jianyi Yang},
+	journal = {bioRxiv},
+	year = {2025},
+	doi = {10.1101/2025.04.09.647915}
+}
+```
+
