@@ -28,8 +28,8 @@ parser.add_argument('-ss',
 parser.add_argument('-ss_fmt',
                     '--ss_fmt',
                     default='dot_bracket',
-                    choices=['spot_prob', 'bpseq', 'dot_bracket', 'ct'],
-                    help='the format of custom SS file; spot_prob/dot_bracket(default)/ct')
+                    choices=['dot_bracket', 'ct', 'bpseq', 'prob', ],
+                    help='the format of custom SS file; dot_bracket(default)/ct/bpseq/prob')
 parser.add_argument('-nrows',
                     '--nrows',
                     default=500, type=int,
@@ -182,7 +182,7 @@ if __name__ == '__main__':
                 ss = parse_ct(args.ss_file, length=len(msa[0]))
             elif args.ss_fmt == 'bpseq':
                 ss = parse_bpseq(args.ss_file)
-            elif args.ss_fmt == 'spot_prob':
+            elif args.ss_fmt == 'prob':
                 ss = np.loadtxt(args.ss_file)
                 ss += ss.T
             ss = torch.from_numpy(ss).float()
