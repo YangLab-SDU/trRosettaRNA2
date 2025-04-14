@@ -20,7 +20,14 @@ We also establish a user-friendly [webserver](http://yanglab.qd.sdu.edu.cn/trRos
 
 Installation
 ----
-### 1. Environment installation
+### Step 1. Clone the repository
+
+```bash
+git clone https://github.com/quailwwk/trRosettaRNA2.git
+cd trRosettaRNA2
+```
+
+### Step 2. Environment installation
 
 It is recommended to use `mamba` to manage the Python dependencies, which can be installed following [Mamba Installation — documentation](https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html). 
 
@@ -31,12 +38,14 @@ Once the `mamba` is installed, a new environment can be created and activated:
 mamba env create -f environment.yml
 ```
 
-### 2. Download the network weights
+### Step 3. Download the network weights
 
 ```bash
 wget http://yanglab.qd.sdu.edu.cn/trRosettaRNA/download/params_trRNA2.tar.bz2
 tar -jxvf params_trRNA2.tar.bz2
 ```
+
+
 
 Usage
 ----
@@ -98,4 +107,10 @@ If you use trRosettaRNA2 in your research or work, please cite our publication:
 	doi = {10.1101/2025.04.09.647915}
 }
 ```
+
+
+
+## Questions & Issues
+
+Have questions or encountered an issue with trRosettaRNA2? Please [open an issue](https://github.com/quailwwk/trRosettaRNA2/issues/new) in our GitHub repository. We'll do our best to help!
 
