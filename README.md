@@ -26,7 +26,7 @@ Installation
 git clone https://github.com/quailwwk/trRosettaRNA2.git
 cd trRosettaRNA2
 ```
-or download [the released package](https://github.com/quailwwk/trRosettaRNA2/releases/tag/v2.0) and unzip
+or download [the released package](https://github.com/quailwwk/trRosettaRNA2/releases/tag/v2.0) and unzip.
 
 ### Step 2. Environment installation
 
@@ -35,7 +35,7 @@ It is recommended to use `mamba` to manage the Python dependencies, which can be
 Once the `mamba` is installed, a new environment can be created and activated: 
 
 ```bash
-### tested on our devises with CUDA 12.4 and 11.2 ###
+### tested on our devices with CUDA 12.4 and 11.2 ###
 mamba env create -f environment.yml
 mamba activate trRNA2
 ```
