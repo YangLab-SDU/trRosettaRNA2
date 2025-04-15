@@ -106,7 +106,7 @@ You can optionally run predictions using alternative configurations. Examples in
 - **run the PyRosetta version**
 
   ```bash
-  python -m trRNA2.predict -i example/seq.a3m -o example/output -pyrosetta -fas example/seq.fasta
+  python -m trRNA2.predict -i example/msa/seq.a3m -o example/output -pyrosetta -fas example/seq.fasta
   ```
 
   In this mode, predicted geometric restraints are converted into energy terms. These terms, combined with the Rosetta energy function, guide the 3D structure refinement process via energy minimization. The predicted 3D structure will be saved as a PDB file `model_1_pyrosetta.pdb` under the `example/output` directory.
@@ -116,7 +116,7 @@ You can optionally run predictions using alternative configurations. Examples in
 - **Using your custom SS:**
 
   ```bash
-  python -m trRNA2.predict -i example/seq.a3m -o example/output -ss example/seq.dbn -ss_fmt dot_bracket 
+  python -m trRNA2.predict -i example/msa/seq.a3m -o example/output -ss example/seq.dbn -ss_fmt dot_bracket 
   ```
 
   Supported SS format:  **bpseq**, **dot_bracket**, **ct**, or **prob** (txt file storing the base-pairing probability matrix)
