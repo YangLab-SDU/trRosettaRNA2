@@ -19,6 +19,7 @@ dependencies:
   - pytorch::torchaudio=2.5.1=py310_cu118
   - pytorch::torchvision=0.20.1=py310_cu118
   - tqdm
+  - bioconda-legacy::perl
   - pip
   - pip:
       - absl-py==2.1.0
