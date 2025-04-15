@@ -89,16 +89,16 @@ else
     #################### check if blastn database file ready exists ######################
     if [ -f $path_blastn_database.ndb ];       then
         echo ""
-        echo "======================================================================="
-        echo "    BLASTN database file $path_blastn_database.ndb already exists      "
-        echo "======================================================================="
+        echo "==========================================================================================================================="
+        echo "        BLASTN database file $path_blastn_database.ndb already exists      "
+        echo "==========================================================================================================================="
         echo ""
     else
         echo ""
         echo "==========================================================================================================================="
-        echo "    BLASTN database file $path_blastn_database.ndb does not exist .          "
-        echo "    Running MAKEBLASTDB to generate BLASTN databse for $path_blastn_database.          "
-        echo "    May take 5-10 mins.                                                                "
+        echo "        BLASTN database file $path_blastn_database.ndb does not exist .          "
+        echo "        Running MAKEBLASTDB to generate BLASTN databse for $path_blastn_database.          "
+        echo "        May take 5-10 mins.                                                                "
         echo "==========================================================================================================================="
         echo ""
         $source_dir/makeblastdb -in $path_blastn_database -dbtype nucl
@@ -167,14 +167,14 @@ else
           echo "============================================================================================="
           echo ""
           exit 1
-      fi
+    fi
 
     ######## predict secondary structure from RNAfold ################
-      echo ""
-      echo "==============================================================================================================================="
-      echo "       Predicting Consensus Secondary Structure (CSS) of query sequence $output_dir/$seq_id.fasta using RNAfold predictor.   "
-      echo "==============================================================================================================================="
-      echo ""
+    echo ""
+    echo "==============================================================================================================================="
+    echo "       Predicting Consensus Secondary Structure (CSS) of query sequence $output_dir/$seq_id.fasta using RNAfold predictor.   "
+    echo "==============================================================================================================================="
+    echo ""
 
     $source_dir/RNAfold $output_dir/$seq_id.fasta | awk '{print $1}' | tail -n +3 > $output_dir/$seq_id.db
 
@@ -202,7 +202,7 @@ else
         echo "=============================================================================="
         echo ""
         exit 1
-      fi
+    fi
 
     ######## run infernal ################
     echo ""
@@ -227,13 +227,13 @@ else
         echo "==============================================================================================="
         echo ""
         exit 1
-      fi
+    fi
 
-        echo ""
-        echo "===================================================================="
-        echo "       Calibrating the Covariance Model $output_dir/$seq_id.cm.    "
-        echo "===================================================================="
-        echo ""
+    echo ""
+    echo "===================================================================="
+    echo "       Calibrating the Covariance Model $output_dir/$seq_id.cm.    "
+    echo "===================================================================="
+    echo ""
     $source_dir/cmcalibrate --cpu $cpu $output_dir/$seq_id.cm
 
     if [ $? -eq 0 ]; then
@@ -251,14 +251,14 @@ else
         echo "==============================================================="
         echo ""
         exit 1
-      fi
+    fi
 
-      echo ""
-      echo "======================================================================================================================"
-      echo "        Second round of homologous sequences search using the calibrated covariance model $output_dir/$seq_id.cm.    "
-      echo "                 May take 15 mins to few hours for this step.                                                         "
-      echo "======================================================================================================================"
-      echo ""
+    echo ""
+    echo "======================================================================================================================"
+    echo "        Second round of homologous sequences search using the calibrated covariance model $output_dir/$seq_id.cm.    "
+    echo "                 May take 15 mins to few hours for this step.                                                         "
+    echo "======================================================================================================================"
+    echo ""
     $source_dir/cmsearch -o $output_dir/$seq_id.out -A $output_dir/$seq_id.msa --cpu $cpu --incE 10.0 $output_dir/$seq_id.cm $path_infernal_database
 
     if [ $? -eq 0 ]; then
@@ -276,15 +276,15 @@ else
         echo "===================================================================================="
         echo ""
         exit 1
-      fi
+    fi
 
     ######### reformat the alignment without gaps and dashes  ###############
-      echo ""
-      echo "======================================================================="
-      echo "          Reformatting the output alignment $output_dir/$seq_id.msa   "
-      echo "          for PSSM and DCA features by removing the gaps and dashes.   "
-      echo "======================================================================="
-      echo ""
+    echo ""
+    echo "======================================================================="
+    echo "          Reformatting the output alignment $output_dir/$seq_id.msa   "
+    echo "          for PSSM and DCA features by removing the gaps and dashes.   "
+    echo "======================================================================="
+    echo ""
     ##### check if .msa	is not empty  #########
     if [[ -s $output_dir/$seq_id.msa ]]
       then
@@ -310,14 +310,14 @@ else
         echo "========================================================================================"
         echo ""
         exit 1
-      fi
+    fi
 
     ######### remove duplicates sequences from the alignment ###############
-      echo ""
-      echo "======================================================================="
-      echo "          Removing duplicates from the alignment.                      "
-      echo "======================================================================="
-      echo ""
+    echo ""
+    echo "======================================================================="
+    echo "          Removing duplicates from the alignment.                      "
+    echo "======================================================================="
+    echo ""
     $script_dir/utils/seqkit rmdup -s $output_dir/temp.a2m > $output_dir/$seq_id.a3m
 
     if [ $? -eq 0 ]; then
@@ -335,18 +335,18 @@ else
         echo "========================================================================================"
         echo ""
         exit 1
-      fi
+    fi
 
     ############# multiline fasta to single line fasta file   #############
     awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < $output_dir/$seq_id.a3m | sed '/^$/d' > $output_dir/temp.a2m
     ############# add query sequence at the top of MSA file  #############
     cat $output_dir/$seq_id.fasta $output_dir/temp.a2m > $output_dir/$seq_id.a3m
-
 fi
 
 end=`date +%s`
 
 runtime=$((end-start))
 
-echo -e "\ncomputation time = "$runtime" seconds"
+echo -e "\nMSA file saved to $output_dir/$seq_id.a3m"
+echo -e "\ncomputation time = "$runtime" seconds\n"
 
