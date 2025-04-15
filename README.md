@@ -31,7 +31,7 @@ Installation
 git clone https://github.com/quailwwk/trRosettaRNA2.git
 cd trRosettaRNA2
 ```
-or download [the released package](https://github.com/quailwwk/trRosettaRNA2/releases/tag/v2.0) and unzip.
+or download [the released package](https://github.com/quailwwk/trRosettaRNA2/releases/tag/v2.0) and uncompress.
 
 ### Step 2. Environment installation
 
@@ -119,7 +119,7 @@ You can optionally run predictions using alternative configurations. Examples in
   python -m trRNA2.predict -i example/msa/seq.a3m -o example/output -ss example/seq.dbn -ss_fmt dot_bracket 
   ```
 
-  Supported SS format:  **bpseq**, **dot_bracket**, **ct**, or **prob** (txt file storing the base-pairing probability matrix)
+  Supported SS format:  **bpseq**, **dot_bracket**, **ct**, or **prob** (txt file storing the base-pairing probability matrix).
 
 For a complete description of all `trRNA2.predict` options and arguments, please run:
 
