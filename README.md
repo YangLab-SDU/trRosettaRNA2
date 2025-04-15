@@ -26,6 +26,7 @@ Installation
 git clone https://github.com/quailwwk/trRosettaRNA2.git
 cd trRosettaRNA2
 ```
+or download [the released package](https://github.com/quailwwk/trRosettaRNA2/releases/tag/v2.0) and unzip
 
 ### Step 2. Environment installation
 
