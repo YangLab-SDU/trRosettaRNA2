@@ -61,7 +61,8 @@ This step downloads a modified version of [RNAcentral](https://rnacentral.org/) 
 You can safely skip this download if you already have a pre-computed MSA file or if you only require single-sequence prediction.
 
 ```bash
-# E.g., download and uncompress into the current directory. The database files will appear under the ./library folder.
+# E.g., download and uncompress into the current directory. 
+# The database files will appear under the ./library folder.
 bash scripts/download_database.sh ./
 ```
 
