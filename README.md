@@ -85,7 +85,7 @@ bash scripts/search_MSA.sh <input_file> <output_directory> <database_file> <cpu_
 bash scripts/search_MSA.sh example/seq.fasta example/msa/ library/rnacentral_99_rep_seq.fasta 4
 ```
 
-This will generate and save the MSA in A3M format to `<output_directory>/<input_fasta_basename>.a3m` (e.g., `example/msa/seq.a3m` in the example above).
+This will generate and save the MSA in A3M format to `<output_directory>/seq.a3m` (e.g., `example/msa/seq.a3m` in the example above).
 
 Alternatively, you can provide your own custom MSA file. If doing so, the file **must be in A3M format.** Please refer to the [MSA format documentation](https://yanglab.qd.sdu.edu.cn/trRosettaRNA/msa_format.html) for details.
 
