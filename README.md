@@ -17,7 +17,7 @@ Starting from an MSA, the trRosettaRNA2 pipeline comprises the following steps:
  - 3D structure prediction using an end-to-end neural network.
  - (optional) 3D structure folding by energy minimization.
 
-For more information about the trRosettaRNA2 pipeline, please refer to the first subsection of the METHODS section in the manuscript.
+For more information about the trRosettaRNA2 pipeline, please refer to the first subsection of the METHODS section in the [manuscript](https://www.biorxiv.org/content/10.1101/2025.04.09.647915v1).
 
 We also establish a user-friendly [webserver](http://yanglab.qd.sdu.edu.cn/trRosettaRNA/) for trRosettaRNA2.
 
