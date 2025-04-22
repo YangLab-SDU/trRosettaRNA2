@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# --- 定义显示帮助信息的函数 ---
 usage() {
-  # 使用 cat 和 Here Document (<<EOF) 来方便地输出多行文本
   cat << EOF
 Usage: bash scripts/$(basename "$0") <input_file> <output_directory> <database_file> <cpu_cores>
 
