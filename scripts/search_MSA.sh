@@ -146,8 +146,8 @@ else
     echo "         Converting $output_dir/$seq_id.bla from BLASTN to $output_dir/$seq_id.sto.   "
     echo "========================================================================================"
     echo ""
-    $script_dir/utils/parse_blastn_local.pl $output_dir/$seq_id.bla $output_dir/$seq_id.fasta $output_dir/$seq_id.aln
-    $script_dir/utils/reformat.pl fas sto $output_dir/$seq_id.aln $output_dir/$seq_id.sto
+    perl $script_dir/utils/parse_blastn_local.pl $output_dir/$seq_id.bla $output_dir/$seq_id.fasta $output_dir/$seq_id.aln
+    perl $script_dir/utils/reformat.pl fas sto $output_dir/$seq_id.aln $output_dir/$seq_id.sto
 
 
     if [ $? -eq 0 ]; then
