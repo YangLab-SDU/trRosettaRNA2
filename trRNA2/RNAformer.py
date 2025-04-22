@@ -12,6 +12,16 @@ from typing import Union, List
 import math
 
 
+def exists(val):
+    return val is not None
+
+
+def default(val, d):
+    if exists(val):
+        return val
+    return d() if isfunction(d) else d
+
+
 class Dropout(nn.Module):
     """
     Implementation of dropout with the ability to share the dropout mask
@@ -69,16 +79,6 @@ class DropoutColumnwise(Dropout):
     """
 
     __init__ = partialmethod(Dropout.__init__, batch_dim=-2)
-
-
-def exists(val):
-    return val is not None
-
-
-def default(val, d):
-    if exists(val):
-        return val
-    return d() if isfunction(d) else d
 
 
 class LayerNormNoBias(nn.Module):
@@ -594,16 +594,7 @@ class UpdateX(nn.Module):
         outer_product = torch.einsum('brid,brjc -> bijcd', m, m) / nrows
         outer_product = rearrange(outer_product, 'b i j c d -> b i j (c d)')
         outer_product = self.proj_down2(outer_product)
-        # pair_feats = torch.cat([x, outer_product], dim=-1)
         pair_feats = x + outer_product
-        # pair_feats = rearrange(pair_feats,'b i j d -> b d i j')
-        # out = self.bn1(pair_feats)
-        # out = self.elu(out)
-        # out = self.conv1(out)
-        # out = self.bn2(out)
-        # out = self.elu(out)
-        # out = self.conv2(out)
-        # return rearrange(pair_feats + out, 'b d i j -> b i j d')
         return pair_feats
 
 

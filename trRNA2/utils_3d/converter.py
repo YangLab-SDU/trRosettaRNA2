@@ -61,10 +61,10 @@ def calc_angls_from_base(coords, seq, angl_infos=ANGL_INFOS_PER_RESD, trans_dict
                                          coords[atm3].squeeze(0).float()[indices],
                                          coords[atm2].squeeze(0).float()[indices])
         for angl, _, atms in angl_info:
-            if angl in ['omega', 'phi', 'angl_0', 'angl_1']:  # 上一级是主链
+            if angl in ['omega', 'phi', 'angl_0', 'angl_1']:
                 angl_prev = 'main'
             else:
-                angl_prev = 'angl_%d' % (int(angl[-1]) - 1)  # 上一级是另一个侧链坐标系
+                angl_prev = 'angl_%d' % (int(angl[-1]) - 1)
             atm1, atm2, atm3 = atms[-1], atms[1], atms[2]
             rot_curr, tsl_curr = calc_rot_tsl(coords[atm1].squeeze(0).float()[indices],
                                               coords[atm3].squeeze(0).float()[indices],
@@ -73,7 +73,7 @@ def calc_angls_from_base(coords, seq, angl_infos=ANGL_INFOS_PER_RESD, trans_dict
 
             rot_prev, tsl_prev = fram_dict[angl_prev]
             rot_base, tsl_vec_base = trans_dict[res]['%s-%s' % (angl, angl_prev)]
-            rot_base = torch.from_numpy(rot_base).float().to(device)  # 到上一个坐标系的转换
+            rot_base = torch.from_numpy(rot_base).float().to(device)
             tsl_base = torch.from_numpy(tsl_vec_base).float().to(device)
 
             rot_base, tsl_base = merge_rot_tsl(rot_prev, tsl_prev, rot_base, tsl_base)
@@ -107,47 +107,6 @@ class RNAConverter():
         for resd_name in RNA_CONSTANTS.RESD_NAMES:
             for atom_name, _, cord_vals in RNA_CONSTANTS.ATOM_INFOS_PER_RESD[resd_name]:
                 self.cord_dict[resd_name][atom_name] = torch.tensor(cord_vals, dtype=torch.float32)
-
-        # trans_dict_all = {}
-        # for resd_name in RNA_CONSTANTS.RESD_NAMES:
-        #     trans_dict = {}
-        #     cord_dict = {}
-        #
-        #     atom_infos = RNA_CONSTANTS.ATOM_INFOS_PER_RESD[resd_name]
-        #     angl_infos = RNA_CONSTANTS.ANGL_INFOS_PER_RESD[resd_name]
-        #     n_angls = len(angl_infos)
-        #
-        #     for atom_name, idx_rgrp, _ in atom_infos:
-        #         if idx_rgrp == 0:  # 主链坐标系下
-        #             cord_dict[atom_name] = self.cord_dict[resd_name][atom_name]
-        #
-        #     trans_dict['omega-main'] = (torch.eye(3, dtype=torch.float32), torch.zeros((3), dtype=torch.float32))
-        #     trans_dict['phi-main'] = (torch.eye(3, dtype=torch.float32), torch.zeros((3), dtype=torch.float32))
-        #
-        #     for idx_angl, (angl_name, _, atom_names_sel) in enumerate(angl_infos):
-        #         x1 = cord_dict[atom_names_sel[0]]
-        #         x2 = cord_dict[atom_names_sel[1]]
-        #         x3 = cord_dict[atom_names_sel[2]]
-        #         rot, tsl_vec = calc_rot_tsl(x1, x3, x3 + (x3 - x2))  # x3-x2,x1-x3
-        #         trans_dict['%s-main' % angl_name] = (rot, tsl_vec)  # 每个侧链坐标系到主链坐标系的转换
-        #
-        #         for atom_name, idx_rgrp, _ in atom_infos:
-        #             if idx_rgrp == idx_angl + 3:  # 在主链坐标系下的局部坐标,cord_dict只是用来推导局部坐标系之间的转化？
-        #                 # 把局部坐标系下的坐标转换为主链坐标系下的（这里不用考虑扭转角的rotation吗？）
-        #                 cord_dict[atom_name] = tsl_vec + torch.sum(
-        #                     rot * self.cord_dict[resd_name][atom_name].view(1, 3), dim=1)
-        #
-        #     for idx_angl_src in range(1, n_angls - 1):  # 在不同侧链局部坐标系（3->2,2->1)之间转换
-        #         idx_angl_dst = idx_angl_src + 1
-        #         angl_name_src = angl_infos[idx_angl_src][0]
-        #         angl_name_dst = angl_infos[idx_angl_dst][0]
-        #         rot_src, tsl_vec_src = trans_dict['%s-main' % angl_name_src]
-        #         rot_dst, tsl_vec_dst = trans_dict['%s-main' % angl_name_dst]
-        #         rot = torch.matmul(rot_src.transpose(1, 0), rot_dst)
-        #         tsl_vec = torch.matmul(rot_src.transpose(1, 0), tsl_vec_dst - tsl_vec_src)
-        #         trans_dict['%s-%s' % (angl_name_dst, angl_name_src)] = (rot, tsl_vec)
-        #
-        #     trans_dict_all[resd_name] = trans_dict
 
         self.trans_dict_init = TRANS_DICT_PER_RESD
 
@@ -218,15 +177,15 @@ class RNAConverter():
         rgrp_names_all = [x[0] for x in angl_infos_all]
 
         for idx_rgrp, rgrp_name_curr in enumerate(rgrp_names_all):
-            if rgrp_name_curr in ['omega', 'phi', 'angl_0', 'angl_1']:  # 上一级是主链
+            if rgrp_name_curr in ['omega', 'phi', 'angl_0', 'angl_1']:
                 rgrp_name_prev = 'main'
             else:
-                rgrp_name_prev = 'angl_%d' % (int(rgrp_name_curr[-1]) - 1)  # 上一级是另一个侧链坐标系
+                rgrp_name_prev = 'angl_%d' % (int(rgrp_name_curr[-1]) - 1)
 
             rot_prev, tsl_prev = trans_dict[rgrp_name_prev]
             rot_base, tsl_vec_base = \
                 self.trans_dict_init[resd_name]['%s-%s' % (rgrp_name_curr, rgrp_name_prev)]
-            rot_base = torch.from_numpy(rot_base).unsqueeze(dim=0).to(device).float()  # 到上一个坐标系的转换
+            rot_base = torch.from_numpy(rot_base).unsqueeze(dim=0).to(device).float()
             tsl_base = torch.from_numpy(tsl_vec_base).unsqueeze(dim=0).to(device).float()
 
             rot_addi, tsl_addi = calc_angl_rot_tsl(angl[:, idx_rgrp])

@@ -101,14 +101,12 @@ for resd in BOND_PER_RESD:
         BOND_MASK_PER_RESD[resd][name2id[a2],name2id[a1]] = 1
 
 # atom coordinate information
-# 0：主链坐标系下 N9-C1'-C4'
-# 3+x: angl_(0+x)
 ATOM_INFOS_PER_RESD = {
     'A': [
         ["C4'", 0, (-1.276165, 1.959880, -0.000000)],
         ["C1'", 0, (0.000000, 0.000000, 0.000000)],
         ["N9", 0, (1.475205, -0.000001, -0.000000)],
-        ["C4", 3, (-0.807920, 1.111760, 0.000005)],  # 每个局部坐标系下的坐标
+        ["C4", 3, (-0.807920, 1.111760, 0.000005)],
         ["N1", 3, (-2.758503, 2.897898, 0.001554)],
         ["C2", 3, (-1.460024, 3.206003, 0.011345)],
         ["N3", 3, (-0.411131, 2.394717, 0.011532)],
@@ -365,10 +363,10 @@ TRANS_DICT_PER_RESD = {
 # torsion angle information for each residue type (name, symmetric or not, and atom names)
 ANGL_INFOS_PER_RESD = {  # order matters
     'A': [
-        ['angl_0', False, ["C4'", "C1'", 'N9', "C4"]],  # C4'-N9-C1' (C1'在x轴）
-        ['angl_1', False, ['N9', "C1'", "C4'", "C5'"]],  # N9-C4'-C1'
-        ['angl_2', False, ["C1'", "C4'", "C5'", "O5'"]],  # C1'-C5'-C4'
-        ['angl_3', False, ["C4'", "C5'", "O5'", "P"]],  # C4'-O5'-C5'
+        ['angl_0', False, ["C4'", "C1'", 'N9', "C4"]],
+        ['angl_1', False, ['N9', "C1'", "C4'", "C5'"]],
+        ['angl_2', False, ["C1'", "C4'", "C5'", "O5'"]],
+        ['angl_3', False, ["C4'", "C5'", "O5'", "P"]],
     ],
     'G': [
         ['angl_0', False, ["C4'", "C1'", 'N9', "C4"]],

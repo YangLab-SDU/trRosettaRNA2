@@ -39,7 +39,6 @@ bins = {
 
 
 def one_hot(x, bin_values=torch.arange(3, 40.5, 1)):
-    """ 0~2,2~2.5,...,19.5~20"""
     bin_values = bin_values.to(x.device)
     n_bins = len(bin_values)
     bin_values = bin_values.view([1] * x.ndim + [-1])

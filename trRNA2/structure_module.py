@@ -681,13 +681,13 @@ class StructureModule(nn.Module):
             scaled_rigids = rigids.scale_translation(self.trans_scale_factor)
 
             preds = {
-                "frames": scaled_rigids.to_tensor_7(),  # 实际用来计算坐标的frame
+                "frames": scaled_rigids.to_tensor_7(),
                 "unnormalized_angles": unnormalized_angles,
                 "angles": angles,
                 'single': s
             }
 
-            outputs.append(preds)  # 每一个block都输出
+            outputs.append(preds)
 
             if i != n_blocks_act - 1:
                 rigids = rigids.stop_rot_gradient()
