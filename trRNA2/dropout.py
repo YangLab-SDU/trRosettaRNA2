@@ -63,7 +63,7 @@ class Dropout(nn.Module):
 class DropoutRowwise(Dropout):
     """
     Convenience class for rowwise dropout as described in subsection
-    1.11.6.
+    1.11.6 in AF2 supp.
     """
 
     __init__ = partialmethod(Dropout.__init__, batch_dim=-3)
@@ -72,7 +72,7 @@ class DropoutRowwise(Dropout):
 class DropoutColumnwise(Dropout):
     """
     Convenience class for columnwise dropout as described in subsection
-    1.11.6.
+    1.11.6 in AF2 supp.
     """
 
     __init__ = partialmethod(Dropout.__init__, batch_dim=-2)
