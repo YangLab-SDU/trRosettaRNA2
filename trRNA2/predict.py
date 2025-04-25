@@ -3,6 +3,8 @@ import tempfile
 
 from argparse import ArgumentParser
 
+import pandas as pd
+
 from .utils import *
 from .model_ss import SSpredictor
 from .model_3d import Folding
@@ -34,6 +36,10 @@ parser.add_argument('-nrows',
                     '--nrows',
                     default=500, type=int,
                     help='maximum number of rows in the MSA repr (default: 500).')
+parser.add_argument('-nrec',
+                    '--num_recycle',
+                    default=3, type=int,
+                    help='number of recyclings (default: 3).')
 parser.add_argument('-refine_steps',
                     '--refine_steps',
                     default=200, type=int,
@@ -88,7 +94,7 @@ def predict(model, seq, msa, ss):
                     f'Length mismatch: seq length {L}, ss length {ss.shape[-1]}, msa length {msa.shape[-1]}!')
             ss = ss.view(1, L, L)
         msa = msa.view(1, -1, L)
-        outputs_all, outputs = model(seq, msa, ss, res_id=res_id.to(device),
+        outputs_all, outputs = model(seq, msa, ss, res_id=res_id.to(device),num_recycle=args.num_recycle,
                                      msa_cutoff=args.nrows, config=config)
 
     outputs_tosave_all = {}
@@ -210,8 +216,14 @@ if __name__ == '__main__':
                                                          confidence=outputs['plddt'][0].data.cpu().numpy(),
                                                          )
         npz_dict = outputs_tosave['inter_labels']
-        npz_dict['plddt'] = outputs['plddt'][-1].data.cpu().numpy()
+        npz_dict['plddt'] = outputs['plddt'][-1][0].data.cpu().numpy()
         np.savez_compressed(npz.replace('.npz', f'_c{c}.npz') if c < config['max_recycle'] else npz, **npz_dict, )
+
+    table = pd.DataFrame()
+    for i in range(len(raw_seq)):
+        table.loc[i+1,'pLDDT'] = npz_dict['plddt'][i]
+    table.index.names = ['Residue_Index']
+    table.to_csv(os.path.abspath(f'{out_dir}/plddt.csv'))
 
     if args.refine_steps is not None and args.refine_steps > 0:
         print('refining......')

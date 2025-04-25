@@ -6,6 +6,8 @@ import numpy as np
 from einops.layers.torch import Rearrange
 from torch import nn
 
+from openfold_v2.experiments.test_templates_openfold import mismatch
+
 obj = {
     'inter_labels': {
         'distance': ["C3'", "P", "N1", "C4", "C1'", "CiNj", "PiNj"],
@@ -84,35 +86,51 @@ def ss2mat(ss_seq):
     stack2 = []
     stack3 = []
     stack_alpha = {alpha: [] for alpha in string.ascii_lowercase}
+    mis_match = False
     for i, s in enumerate(ss_seq):
         if s == '(':
             stack.append(i)
         elif s == ')':
+            if not stack:
+                mis_match = True
+                break
             ss_mat[i, stack.pop()] = 1
         elif s == '[':
             stack1.append(i)
         elif s == ']':
+            if not stack1:
+                mis_match = True
+                break
             ss_mat[i, stack1.pop()] = 1
         elif s == '{':
             stack2.append(i)
         elif s == '}':
+            if not stack2:
+                mis_match = True
+                break
             ss_mat[i, stack2.pop()] = 1
         elif s == '<':
             stack3.append(i)
         elif s == '>':
+            if not stack3:
+                mis_match = True
+                break
             ss_mat[i, stack3.pop()] = 1
         elif s.isalpha() and s.isupper():
             stack_alpha[s.lower()].append(i)
         elif s.isalpha() and s.islower():
+            if not stack_alpha[s]:
+                mis_match = True
+                break
             ss_mat[i, stack_alpha[s].pop()] = 1
         elif s in ['.', ',', '_', ':', '-']:
             continue
         else:
-            raise ValueError(f'unk not: {s}!')
+            raise ValueError(f'Unknown notation in dbn: {s}!')
     allstacks = stack + stack1 + stack2 + stack3
     for _, stack in stack_alpha.items():
         allstacks += stack
-    if len(allstacks) > 0:
+    if len(allstacks) > 0 or mis_match:
         raise ValueError('Provided dot-bracket notation is not completely matched!')
 
     ss_mat += ss_mat.T

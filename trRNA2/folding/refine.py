@@ -254,7 +254,7 @@ def refine(init_pdb, max_iter=200):
         new_lines = []
         for line in open(init_pdb):
             if (line.startswith('ATOM')
-                    and line[19] == 'N'  # unknown AA; 'X' for protein
+                    and line[19] == 'N'  # unknown AA; 'N' for RNA
             ):
                 continue
             new_lines.append(line)
