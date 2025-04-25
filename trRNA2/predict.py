@@ -192,8 +192,8 @@ if __name__ == '__main__':
 
     outputs_tosave_all, outputs_all = predict(model, raw_seq, msa, ss)
 
-    unrelaxed_model = os.path.abspath(f'{out_dir}/model_1.pdb')
-    refined_model = os.path.abspath(f'{out_dir}/model_1_refined{args.refine_steps}.pdb')
+    unrelaxed_model = os.path.abspath(f'{out_dir}/model_1_unrelaxed.pdb')
+    refined_model = os.path.abspath(f'{out_dir}/model_1_relaxed{args.refine_steps}.pdb')
     npz = os.path.abspath(f'{out_dir}/model_1_2D.npz')
 
     for c in outputs_tosave_all:
