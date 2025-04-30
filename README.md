@@ -97,7 +97,7 @@ Alternatively, you can provide your own custom MSA file. If doing so, the file *
 python -m trRNA2.predict -i example/msa/seq.a3m -o example/output
 ```
 
-This command executes the default trRosettaRNA2 prediction procedure. This process utilizes its internal secondary structure (SS) module, `trRNA2-SS`, to predict SS and performs **end-to-end** structure prediction. The predicted 3D structure will be saved as a PDB file `model_1_relaxed200.pdb` under the `example/output` directory.
+This command executes the default trRosettaRNA2 prediction procedure. This process utilizes its internal secondary structure (SS) module, `trRNA2-SS`, to predict SS and then performs structure prediction using a **end-to-end** neural network. The predicted 3D structure will be saved as a PDB file `model_1_relaxed200.pdb` under the `example/output` directory.
 
 **Alternative prediction configurations:**
 
