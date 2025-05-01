@@ -105,11 +105,13 @@ You can optionally run predictions using alternative configurations. Examples in
 
 - **run the PyRosetta version**
 
+  If the default prediction possess serious steric clashes (e.g., clashscore>20, which can be calculated on [MolProbity](http://molprobity.biochem.duke.edu/)), it is recommended to use the **PyRosetta** version instead. In this mode, predicted geometric restraints are converted into energy terms. These terms, combined with the Rosetta energy function, guide the 3D structure refinement process via **energy minimization**. 
+
   ```bash
   python -m trRNA2.predict -i example/msa/seq.a3m -o example/output -pyrosetta -fas example/seq.fasta
   ```
 
-  In this mode, predicted geometric restraints are converted into energy terms. These terms, combined with the Rosetta energy function, guide the 3D structure refinement process via **energy minimization**. The predicted 3D structure will be saved as a PDB file `model_1_pyrosetta.pdb` under the `example/output` directory.
+  The predicted 3D structure will be saved as a PDB file `model_1_pyrosetta.pdb` under the `example/output` directory.
 
   **Note:** The **FASTA** file storing the query sequence must be provided for the PyRosetta version.
 
