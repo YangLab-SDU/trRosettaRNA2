@@ -6,8 +6,6 @@ import numpy as np
 from einops.layers.torch import Rearrange
 from torch import nn
 
-from openfold_v2.experiments.test_templates_openfold import mismatch
-
 obj = {
     'inter_labels': {
         'distance': ["C3'", "P", "N1", "C4", "C1'", "CiNj", "PiNj"],
