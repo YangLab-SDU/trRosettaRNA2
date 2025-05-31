@@ -81,24 +81,6 @@ class DropoutColumnwise(Dropout):
     __init__ = partialmethod(Dropout.__init__, batch_dim=-2)
 
 
-class LayerNormNoBias(nn.Module):
-    def __init__(self, normalized_shape, eps=1e-5, elementwise_affine: bool = True):
-        super(LayerNormNoBias, self).__init__()
-        self.normalized_shape = normalized_shape
-        self.eps = eps
-        if elementwise_affine:
-            self.gamma = nn.Parameter(torch.ones(normalized_shape))
-        else:
-            self.gamma = torch.ones(normalized_shape)
-
-    def forward(self, x):
-        # 计算标准差
-        std = torch.sqrt(x.var(dim=-1, unbiased=False, keepdim=True) + self.eps)
-        # 规范化
-        normalized_x = self.gamma * (x) / std
-        return normalized_x
-
-
 class Bottle2neck(nn.Module):
 
     def __init__(self, inplanes, planes, stride=1, dilation=1, baseWidth=26, scale=4, stype='normal', expansion=4,
@@ -219,9 +201,7 @@ class TriangleAttention(nn.Module):
         self.wise = wise
         self.norm = nn.LayerNorm(in_dim)
         self.to_qkv = nn.Linear(in_dim, dim * 3 * n_heads, bias=False)
-        if qknorm:
-            self.q_norm = LayerNormNoBias(dim)
-            self.k_norm = LayerNormNoBias(dim)
+
         self.linear_for_pair = nn.Linear(in_dim, n_heads, bias=False)
         self.to_gate = nn.Sequential(
             nn.Linear(in_dim, n_heads * dim),
@@ -253,9 +233,7 @@ class TriangleAttention(nn.Module):
 
         else:
             raise ValueError('wise should be col or row!')
-        if hasattr(self, 'qknorm') and self.qknorm:
-            q = self.q_norm(q)
-            k = self.k_norm(k)
+
         attn = (torch.einsum(eq_attn, q, k / scale) + b).softmax(softmax_dim)
         out = torch.einsum(eq_multi, attn, v)
         out = gate * rearrange(out, 'b i j h d-> b i j (h d)')
