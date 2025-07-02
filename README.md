@@ -49,6 +49,9 @@ mamba activate trRNA2
 
 ```bash
 wget http://yanglab.qd.sdu.edu.cn/trRosettaRNA/download/params_trRNA2.tar.bz2
+# If you encounter timeout or connection errors, try downloading from our Hugging Face mirror instead:
+# wget https://huggingface.co/datasets/quailwwk/trRNA2_sequence_library/resolve/main/params_trRNA2.tar.bz2
+
 tar -jxvf params_trRNA2.tar.bz2
 ```
 
@@ -64,6 +67,9 @@ You can safely skip this download if you already have a pre-computed MSA file or
 # E.g., download and uncompress into the current directory. 
 # The database files will appear under the ./library folder.
 bash scripts/download_database.sh ./
+
+# If you encounter timeout or connection errors, try downloading from our Hugging Face mirror instead:
+# bash scripts/download_database_huggingface.sh ./
 ```
 
 
