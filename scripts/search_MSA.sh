@@ -257,7 +257,7 @@ else
     echo "                 May take 15 mins to few hours for this step.                                                         "
     echo "======================================================================================================================"
     echo ""
-    $source_dir/cmsearch -o $output_dir/$seq_id.out -A $output_dir/$seq_id.msa --cpu $cpu --incE 10.0 $output_dir/$seq_id.cm $path_infernal_database
+    $source_dir/cmsearch -o $output_dir/$seq_id.out -A $output_dir/$seq_id.msa --cpu $cpu --incE 0.01 $output_dir/$seq_id.cm $path_infernal_database
 
     if [ $? -eq 0 ]; then
         echo ""
