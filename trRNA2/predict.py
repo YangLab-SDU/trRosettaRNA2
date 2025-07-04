@@ -19,7 +19,7 @@ parser.add_argument('-o',
                     required=True,
                     help='(required) output directory')
 parser.add_argument('-mdir', '--model_pth',
-                    default=f'params/bench2022',
+                    default=f'params/bench2024',
                     help='pretrained params directory')
 parser.add_argument('-mname',
                     '--model_name',
@@ -201,7 +201,7 @@ if __name__ == '__main__':
     outputs_tosave_all, outputs_all = predict(model, raw_seq, msa, ss)
 
     unrelaxed_model = os.path.abspath(f'{out_dir}/model_1_unrelaxed.pdb')
-    refined_model = os.path.abspath(f'{out_dir}/model_1_relaxed{args.refine_steps}.pdb')
+    relaxed_model = os.path.abspath(f'{out_dir}/model_1_relaxed{args.refine_steps}.pdb')
     npz = os.path.abspath(f'{out_dir}/model_1_2D.npz')
 
     for c in outputs_tosave_all:
@@ -231,7 +231,7 @@ if __name__ == '__main__':
         print('refining......')
         from .folding.refine import refine
 
-        refine(unrelaxed_model, args.refine_steps)
+        refine(unrelaxed_model, relaxed_model, args.refine_steps)
 
     if args.pyrosetta:
         print('running pyrosetta...')

@@ -237,7 +237,7 @@ def run_min(cst_all, n_sets, pose, mover1, mover2=None, tmpname=None):
             mover2.apply(pose)
 
 
-def refine(init_pdb, max_iter=200):
+def refine(init_pdb, out_pdb, max_iter=200):
     op_score = create_score_function('ref2015')
     op_score.set_weight(rosetta.core.scoring.atom_pair_constraint, 9)
     op_score.set_weight(rosetta.core.scoring.dihedral_constraint, 4.0)
@@ -303,5 +303,4 @@ def refine(init_pdb, max_iter=200):
     except:
         print('!!! idealization failed !!!')
 
-    name = init_pdb[:-4] + f'_ref{max_iter}.pdb'
-    pose.dump_pdb(name)
+    pose.dump_pdb(out_pdb)
