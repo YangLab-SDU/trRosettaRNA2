@@ -228,13 +228,13 @@ if __name__ == '__main__':
     table.to_csv(os.path.abspath(f'{out_dir}/plddt.csv'))
 
     if args.refine_steps is not None and args.refine_steps > 0:
-        print('refining......')
+        print('---------------Relaxation--------------')
         from .folding.refine import refine
 
         refine(unrelaxed_model, relaxed_model, args.refine_steps)
 
     if args.pyrosetta:
-        print('running pyrosetta...')
+        print('--------------Run pyRosetta------------')
         from .folding.utils_cst import npz2cst
         from .folding.utils_ros import fold_all
 
