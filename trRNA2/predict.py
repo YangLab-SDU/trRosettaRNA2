@@ -96,8 +96,12 @@ def predict(model, seq, msa, ss):
                     f'Length mismatch: seq length {L}, ss length {ss.shape[-1]}, msa length {msa.shape[-1]}!')
             ss = ss.view(1, L, L)
         msa = msa.view(1, -1, L)
-        outputs_all, outputs = model(seq, msa, ss, res_id=res_id.to(device),num_recycle=args.num_recycle,
-                                     msa_cutoff=args.nrows, config=config)
+        outputs_all, outputs = model(seq, msa, ss,
+                                     res_id=res_id.to(device),
+                                     num_recycle=args.num_recycle,
+                                     msa_cutoff=args.nrows,
+                                     return_mid=args.return_mid,
+                                     config=config)
 
     outputs_tosave_all = {}
     for c in outputs_all:
