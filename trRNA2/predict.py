@@ -19,7 +19,7 @@ parser.add_argument('-o',
                     required=True,
                     help='(required) output directory')
 parser.add_argument('-mdir', '--model_pth',
-                    default=f'params/bench2024',
+                    default=f'params/',
                     help='pretrained params directory')
 parser.add_argument('-mname',
                     '--model_name',
