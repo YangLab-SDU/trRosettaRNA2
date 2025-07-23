@@ -13,7 +13,7 @@ mkdir -p "${db_dir}"
 cd "${db_dir}"
 
 readonly NAME=library
-readonly SOURCE='https://huggingface.co/datasets/quailwwk/trRNA2_sequence_library/resolve/main/'
+readonly SOURCE='https://huggingface.co/datasets/quailwwk/trRNA2/resolve/main/'
 echo "Start Downloading ${NAME}"
 wget "${SOURCE}/${NAME}.tar.bz2"
 echo "Uncompress ${NAME}"
