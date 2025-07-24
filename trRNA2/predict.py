@@ -148,7 +148,6 @@ if __name__ == '__main__':
     structure_module_config = config['structure_module']
     model_ckpt = torch.load(f'{args.model_pth}/models/{args.model_name}.pth.tar', map_location=device,
                             weights_only=True)
-    model_ckpt = {k: model_ckpt[k] for k in model_ckpt if 'refinenet' not in k}
     if "to_dist.fc_2d.distance.C4'.1.weight" in model_ckpt:
         obj['inter_labels']['distance'] = ["C3'", "P", "N1", "C4", "C1'", "CiNj", "PiNj", "C4'"]
     model = Folding(dim_2d=config['dim_pair'], layers_2d=config['RNAformer']['n_block'], config=config).to(device)

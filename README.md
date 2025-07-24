@@ -50,7 +50,7 @@ mamba activate trRNA2
 ```bash
 wget http://yanglab.qd.sdu.edu.cn/trRosettaRNA/download/params_trRNA2.tar.bz2
 # If you encounter timeout or connection errors, try downloading from our Hugging Face mirror instead:
-# wget https://huggingface.co/datasets/quailwwk/trRNA2_sequence_library/resolve/main/params_trRNA2.tar.bz2
+# wget https://huggingface.co/datasets/quailwwk/trRNA2/resolve/main/params_trRNA2.tar.bz2
 
 tar -jxvf params_trRNA2.tar.bz2
 ```
