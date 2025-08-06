@@ -127,7 +127,7 @@ You can optionally run predictions using alternative configurations. Examples in
   python -m trRNA2.predict -i example/msa/seq.a3m -o example/output -ss example/seq.dbn -ss_fmt dot_bracket 
   ```
 
-  Supported SS format:  **bpseq**, **dot_bracket**, **ct**, or **prob** (txt file storing the base-pairing probability matrix).
+  Supported SS format:  **bpseq**, **dot_bracket**, **ct**, or **TXT** (txt file storing the base-pairing probability matrix). See [examples](example/SS).
 
 For a complete description of all `trRNA2.predict` options and arguments, please run:
 
