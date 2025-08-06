@@ -98,7 +98,7 @@ def predict(model, seq, msa, ss):
         msa = msa.view(1, -1, L)
         outputs_all, outputs = model(seq, msa, ss,
                                      res_id=res_id.to(device),
-                                     num_recycle=args.num_recycle,
+                                     num_recycle=args.num_recycles,
                                      msa_cutoff=args.nrows,
                                      return_mid=args.return_mid,
                                      config=config)
@@ -182,7 +182,7 @@ if __name__ == '__main__':
         with torch.no_grad():
             ss_lst = []
             for ss_model in ss_models:
-                ss = ss_model(msa).float()
+                ss = ss_model(msa, msa_cutoff=args.nrows).float()
                 ss_lst.append(ss)
             ss = torch.mean(torch.stack(ss_lst, dim=0), dim=0)
     else:
