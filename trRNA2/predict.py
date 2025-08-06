@@ -39,13 +39,13 @@ parser.add_argument('-nrows',
                     default=500, type=int,
                     help='maximum number of rows in the MSA repr (default: 500).')
 parser.add_argument('-nrec',
-                    '--num_recycle',
+                    '--num_recycles',
                     default=3, type=int,
-                    help='number of recyclings (default: 3).')
-parser.add_argument('-refine_steps',
-                    '--refine_steps',
+                    help='number of recycles (default: 3).')
+parser.add_argument('-relax_steps',
+                    '--relax_steps',
                     default=200, type=int,
-                    help='maximum steps of refinement (default: 200).')
+                    help='maximum steps of relaxment (default: 200).')
 parser.add_argument('-mid',
                     '--return_mid',
                     action='store_true',
@@ -134,7 +134,7 @@ if __name__ == '__main__':
 
     if args.pyrosetta:
         assert args.fas is not None, 'please specify --fas if PyRosetta version is needed!'
-        args.refine_steps = 0
+        args.relax_steps = 0
 
     torch.set_num_threads(args.cpu)
     device = torch.device(f'cuda:{args.gpu}') if torch.cuda.is_available() and args.gpu >= 0 else torch.device('cpu')
@@ -204,7 +204,7 @@ if __name__ == '__main__':
     outputs_tosave_all, outputs_all = predict(model, raw_seq, msa, ss)
 
     unrelaxed_model = os.path.abspath(f'{out_dir}/model_1_unrelaxed.pdb')
-    relaxed_model = os.path.abspath(f'{out_dir}/model_1_relaxed{args.refine_steps}.pdb')
+    relaxed_model = os.path.abspath(f'{out_dir}/model_1_relaxed{args.relax_steps}.pdb')
     npz = os.path.abspath(f'{out_dir}/model_1_2D.npz')
 
     for c in outputs_tosave_all:
@@ -230,11 +230,11 @@ if __name__ == '__main__':
     table.index.names = ['Residue_Index']
     table.to_csv(os.path.abspath(f'{out_dir}/plddt.csv'))
 
-    if args.refine_steps is not None and args.refine_steps > 0:
+    if args.relax_steps is not None and args.relax_steps > 0:
         print('---------------Relaxation--------------')
         from .folding.refine import refine
 
-        refine(unrelaxed_model, relaxed_model, args.refine_steps)
+        refine(unrelaxed_model, relaxed_model, args.relax_steps)
 
     if args.pyrosetta:
         print('--------------Run pyRosetta------------')
