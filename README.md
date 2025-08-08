@@ -28,10 +28,10 @@ Installation
 ### Step 1. Clone the repository
 
 ```bash
-git clone https://github.com/quailwwk/trRosettaRNA2.git
+git clone https://github.com/YangLab-SDU/trRosettaRNA2.git
 cd trRosettaRNA2
 ```
-or download [the released package](https://github.com/quailwwk/trRosettaRNA2/releases/tag/v2.0.2) and uncompress.
+or download [the released package](https://github.com/YangLab-SDU/trRosettaRNA2/releases/tag/v2.0.2) and uncompress.
 
 ### Step 2. Environment installation
 
