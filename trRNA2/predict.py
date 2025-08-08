@@ -79,8 +79,8 @@ group.add_argument('-dcut',
                    help='cutoff of distance restraints')
 group.add_argument('-tmp',
                    '--tmpdir',
-                   default='/dev/shm/',
-                   help='temp folder to store all the restraints')
+                   default=None,
+                   help='temp folder to store all the restraints and decoy models')
 args = parser.parse_args()
 
 
@@ -133,7 +133,7 @@ def predict(model, seq, msa, ss):
 if __name__ == '__main__':
 
     if args.pyrosetta:
-        assert args.fas is not None, 'please specify --fas if PyRosetta version is needed!'
+        assert args.fas is not None, 'please specify the path to the fasta file by `--fas` if PyRosetta version is needed!'
         args.relax_steps = 0
 
     torch.set_num_threads(args.cpu)
@@ -241,8 +241,9 @@ if __name__ == '__main__':
         from .folding.utils_cst import npz2cst
         from .folding.utils_ros import fold_all
 
-        tmpdir = tempfile.TemporaryDirectory(prefix=args.tmpdir + '/')
-        args.tmpdir = tmpdir.name
+        if args.tmpdir is None:
+            tmpdir = tempfile.TemporaryDirectory(prefix='/dev/shm/')
+            args.tmpdir = tmpdir.name
         print('temp folder:     ', args.tmpdir)
         # parse npz into rosetta-format restraint files
         npz2cst(args, geoms=outputs_tosave['inter_labels'])
