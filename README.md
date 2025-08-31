@@ -135,7 +135,9 @@ For a complete description of all `trRNA2.predict` options and arguments, please
 python -m trRNA2.predict -h
 ```
 
-
+Training
+----
+Coming soon...
 
 ## Citation 
 
