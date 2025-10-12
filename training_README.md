@@ -1,6 +1,6 @@
 # Tutorial for trRosettaRNA2 training
 
-## 前置准备
+## Prerequisites
 
 ### Downloading training set files
 
