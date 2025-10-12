@@ -1,4 +1,6 @@
 import json
+import os
+import random
 import string
 import torch
 import numpy as np
@@ -164,6 +166,23 @@ def parse_bpseq(bpseq_file):
         if j > 0:
             ss_mat[i - 1, j - 1] = 1
     return ss_mat
+
+
+def subsample(msa, limit=30000):
+    nr, nc = msa.shape
+    if nr < 10: return msa
+    n = min(limit, int(10 ** np.random.uniform(np.log10(nr)) - 10))
+    if n <= 0: return np.array([msa[0]])
+    indices = sorted(random.sample(range(1, nr), n) + [0])
+    return msa[indices]
+
+
+def cosangle(A, B, C, eps=1e-6):
+    AB = A - B
+    BC = C - B
+    ABn = np.sqrt(np.sum(np.square(AB), axis=-1) + eps)
+    BCn = np.sqrt(np.sum(np.square(BC), axis=-1) + eps)
+    return np.clip(np.sum(AB * BC, axis=-1) / (ABn * BCn), -0.999, 0.999)
 
 
 def save_to_json(obj, file):

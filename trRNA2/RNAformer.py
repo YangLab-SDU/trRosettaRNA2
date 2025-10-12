@@ -354,13 +354,13 @@ class TriUpdate(nn.Module):
         pair_row_attn = self.pair_row_attn
         args = (z,)
         if z.requires_grad and ckpt:
-            z = z + self.ps_dropout_row_layer(checkpoint(pair_row_attn, *args)) + self.conv_stem[2](z)
+            z = z + self.ps_dropout_row_layer(checkpoint(pair_row_attn, *args,use_reentrant=True)) + self.conv_stem[2](z)
         else:
             z = z + self.ps_dropout_row_layer(pair_row_attn(*args)) + self.conv_stem[2](z)
         pair_col_attn = self.pair_col_attn
         args = (z,)
         if z.requires_grad and ckpt:
-            z = z + self.ps_dropout_row_layer(checkpoint(pair_col_attn, *args)) + self.conv_stem[3](z)
+            z = z + self.ps_dropout_row_layer(checkpoint(pair_col_attn, *args,use_reentrant=True)) + self.conv_stem[3](z)
         else:
             z = z + self.ps_dropout_row_layer(pair_col_attn(*args)) + self.conv_stem[3](z)
         z = z + self.pair_trans(z)
@@ -511,7 +511,7 @@ class MSAAttention(nn.Module):
         # col-wise
         w_x = rearrange(x, 'b h w d -> (b w) h d')
         if w_x.requires_grad and ckpt:
-            w_out = checkpoint(self.attn_width, w_x)
+            w_out = checkpoint(self.attn_width, w_x,use_reentrant=True)
         else:
             w_out = self.attn_width(w_x)
 
@@ -521,7 +521,7 @@ class MSAAttention(nn.Module):
         attn_height = partial(self.attn_height, tie_attn_dim=tie_attn_dim, return_attn=return_attn)
 
         if h_x.requires_grad and ckpt:
-            h_out = checkpoint(attn_height, h_x, pair_bias)
+            h_out = checkpoint(attn_height, h_x, pair_bias,use_reentrant=True)
         else:
             h_out = attn_height(h_x, pair_bias)
         if return_attn:

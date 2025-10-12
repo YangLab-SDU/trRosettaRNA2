@@ -147,7 +147,7 @@ class Distogram(nn.Module):
 
     def forward(self, pair_repr):
         pair_repr = rearrange(self.out_elu_2d(rearrange(pair_repr, 'b i j d->b d i j')), 'b d i j->b i j d')
-        pred_dict = {'inter_labels': defaultdict(dict), 'intra_labels': defaultdict(dict)}
+        pred_dict = {'inter_labels': defaultdict(dict)}
         for k in obj['inter_labels']:
             if k != 'contact':
                 for a in obj['inter_labels'][k]:
@@ -207,11 +207,11 @@ class Folding(nn.Module):
         )
 
     def forward(self, raw_seq, msa, ss, res_id=None, num_recycle=3, msa_cutoff=500, return_mid=False,
-                return_attn=False, config={}):
+                return_attn=False, is_training=False, config={}):
         reprs_prev = None
         outputs_all = {}
         for c in range(1 + num_recycle):
-            with torch.set_grad_enabled(False):
+            with torch.set_grad_enabled(is_training and (c == num_recycle)):
                 # with torch.amp.autocast(enabled=len(raw_seq) > 300,device_type='cuda'):
                 reprs = self.input_embedder(msa, ss, msa_cutoff=msa_cutoff)
                 if reprs_prev is None:
@@ -220,7 +220,9 @@ class Folding(nn.Module):
                         'single': torch.zeros_like(reprs['msa'][:, 0]),
                         'x': torch.zeros(list(reprs['pair'].shape[:2]) + [3], device=reprs['pair'].device),
                     }
-                t = reprs_prev['x']
+                    t = reprs_prev['x']
+                if not is_training:
+                    t = reprs_prev['x']
                 rec_msa, rec_pair = self.recycle_embedder(reprs_prev, t)
                 reprs['msa'][:, 0] = reprs['msa'][:, 0] + rec_msa
                 reprs['pair'] = reprs['pair'] + rec_pair
@@ -280,7 +282,11 @@ class Folding(nn.Module):
                     tsls = []
                     if config['init_str'] == 'nn':
                         rots.append(R)
-                        tsls.append(t)
+                        if 'divide' in config and config['divide']:
+                            tsls.append(t)
+                        else:
+                            tsls.append(t * config['structure_module']['trans_scale_factor'])
+
                     for frames in outputs['frames']:
                         rigid = Rigid.from_tensor_7(frames, normalize_quats=True)
                         fram = rigid.to_tensor_4x4()

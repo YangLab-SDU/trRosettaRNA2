@@ -30,3 +30,4 @@ dependencies:
       - ml-collections==1.0.0
       - scipy==1.15.2
       - torch-geometric==2.6.1
+      - openpyxl
