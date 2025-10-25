@@ -50,7 +50,7 @@ data_group.add_argument('-lst', '--train_lst_file', type=str, default=None,
                         help='Optional: Path to a list file for filtering training samples by date. \n'
                              'If not provided, all samples in `train_npz_dir` will be used. \n'
                              'Can be downloaded via https://yanglab.qd.sdu.edu.cn/trRosettaRNA/benchmark/train10699.lst')
-data_group.add_argument('-date', '--date_cutoff', default=20220101, type=int,
+data_group.add_argument('-date', '--date_cutoff', default=20240101, type=int,
                         help='Release date cutoff for training samples (format: YYYYMMDD). '
                              'Requires `-lst` to be specified.')
 data_group.add_argument('-crop_size', '--crop_size', nargs=3, type=int, default=[256, 384, 384],
