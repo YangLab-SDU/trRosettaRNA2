@@ -165,7 +165,7 @@ class InitStr_Network(nn.Module):
                  out_atoms=3,
                  out_fmt='coord',
                  split_pr=False,
-                 use_ss=False
+                 use_ss=True
                  ):
         super(InitStr_Network, self).__init__()
 

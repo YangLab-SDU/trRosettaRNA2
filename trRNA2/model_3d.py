@@ -179,7 +179,7 @@ class Folding(nn.Module):
             self.init_str = InitStr_Network(
                 node_dim_in=dim_2d, edge_dim_in=dim_2d,
                 node_dim_hidden=dim_3d, edge_dim_hidden=dim_3d,
-                use_ss='ss3D' in config and config['ss3D'],
+                # use_ss='ss3D' in config and config['ss3D'],
                 aa_types=5,
                 nblocks=2, dropout=.3, out_fmt='quats')
         self.structure_module = StructureModule(
@@ -238,7 +238,8 @@ class Folding(nn.Module):
                 if ('ss3D' in config and config['ss3D']):
                     input_ss = ss.float()
                 else:
-                    input_ss = None
+                    input_ss = ss.float() * 0
+                    # input_ss = None
 
                 if config['init_str'] == 'nn':
                     seq1hot = (torch.arange(5, device=msa.device) == msa[0, 0:1, :, None]).float()
