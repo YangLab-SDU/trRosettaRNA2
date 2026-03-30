@@ -151,6 +151,12 @@ If you use trRosettaRNA2 in your research or work, please cite our publication:
 	year = {2025},
 	doi = {10.1101/2025.04.09.647915}
 }
+@article {Wang2026trRNAserver,
+	title = {The trRosettaRNA server for RNA structure prediction},
+	author = {Wenkai Wang, Xiaocheng Liu, Zhenling Peng, and Jianyi Yang},
+	journal = {Nature Protocols},
+	year = {2026},
+}
 ```
 
 
