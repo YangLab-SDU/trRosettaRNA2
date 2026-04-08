@@ -156,6 +156,7 @@ If you use trRosettaRNA2 in your research or work, please cite our publication:
 	author = {Wenkai Wang, Xiaocheng Liu, Zhenling Peng, and Jianyi Yang},
 	journal = {Nature Protocols},
 	year = {2026},
+	doi = {10.1038/s41596-026-01356-8}
 }
 ```
 
