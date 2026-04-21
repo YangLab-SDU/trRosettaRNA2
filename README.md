@@ -147,9 +147,9 @@ If you use trRosettaRNA2 in your research or work, please cite our publication:
 @article {Wang2024trRosettaRNA2,
 	title = {Predicting RNA 3D structure and conformers using a pre-trained secondary structure model and structure-aware attention},
 	author = {Wenkai Wang, Zhenling Peng, and Jianyi Yang},
-	journal = {bioRxiv},
-	year = {2025},
-	doi = {10.1101/2025.04.09.647915}
+	journal = {Nature Machine Intelligence},
+	year = {2026},
+	doi = {10.1038/s42256-026-01223-x}
 }
 @article {Wang2026trRNAserver,
 	title = {The trRosettaRNA server for RNA structure prediction},
