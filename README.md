@@ -31,7 +31,7 @@ Installation
 git clone https://github.com/YangLab-SDU/trRosettaRNA2.git
 cd trRosettaRNA2
 ```
-or download [the released package](https://github.com/YangLab-SDU/trRosettaRNA2/releases/tag/v2.0.2) and uncompress.
+or download [the released package](https://github.com/YangLab-SDU/trRosettaRNA2/releases/tag/v2.0.4) and uncompress.
 
 ### Step 2. Environment installation
 
