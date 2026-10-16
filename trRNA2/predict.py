@@ -177,6 +177,7 @@ if __name__ == '__main__':
             model_ckpt = torch.load(f'{args.model_pth}/models_ss/{ss_mname}.pth.tar', map_location=device,
                                     weights_only=True)
             ss_model.load_state_dict(model_ckpt)
+            ss_model.eval()
             ss_models.append(ss_model)
 
         with torch.no_grad():
